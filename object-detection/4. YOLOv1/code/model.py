@@ -134,8 +134,6 @@ class YOLOV1(K.Model):
 		
 
 
-
-
 if __name__ == '__main__':
 	model = YOLOV1((448, 448, 3), 7, 2, 20)
 	out = model(np.random.random((2, 448, 448, 3)))

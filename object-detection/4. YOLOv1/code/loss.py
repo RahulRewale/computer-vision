@@ -7,7 +7,7 @@ class YOLOLoss(K.losses.Loss):
 	""" Class used to compute YOLO loss"""
 	
 	def __init__(self, lambda_coord=5, lambda_noobj=0.5, name='yolo_loss'):
-		""" Set few parameters """
+		""" Set few attributes """
 		super().__init__(name=name)
 		self.lambda_coord = lambda_coord
 		self.lambda_noobj = lambda_noobj
@@ -142,4 +142,4 @@ class YOLOLoss(K.losses.Loss):
 						inter_area
 		# tf.debugging.assert_shapes([(inter_area, (None, 7, 7))])
 
-		return inter_area/(union_area + 1e-6)
+		return inter_area/(union_area + 1e-6)	# avoid division by 0

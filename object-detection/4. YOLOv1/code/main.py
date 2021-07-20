@@ -77,13 +77,6 @@ optimizer = K.optimizers.SGD(learning_rate=learnRate, momentum=0.9)
 if len(sys.argv) > 3:
 	model.load_yolo(sys.argv[3], optimizer)
 	print("Loaded pre-trained model and optimizer")
-	# yolo_loss = loss.YOLOLoss()
-	# for img_batch, label_batch in train_ds:
-	# 	pred_batch = model(img_batch, training=False)
-	# 	print(yolo_loss(label_batch, pred_batch))
-
-
-metric = K.metrics.Mean()
 
 
 # callbacks
@@ -97,7 +90,8 @@ model.compile(optimizer=optimizer, loss=loss.YOLOLoss())
 model.fit(train_ds, epochs=epochs, validation_data=val_ds, callbacks=[lr_scheduler, csv_logger, ckpt])
 
 
-# custom training - getting OOM after few epochs
+# custom training
+# metric = K.metrics.Mean()
 # for ep in range(epochs):
 # 	print(f"\n\nEpoch {ep+1}/{epochs}:")
 # 	batch_losses = []
@@ -136,24 +130,5 @@ for img_batch, label_batch in val_ds.take(1):
 		yolo_utils.plot_boxes(GRID_SIZE, img.numpy(), label.numpy(), pred)
 
 # save the model
-# model.save(f'trained-model-{learnRate}-{epochs}')
 model.save_yolo(f'trained-model-{learnRate}-{epochs}', optimizer)
 print("Model saved")
-
-
-
-
-
-# 100 examples; batch: 16; 1024 FC; momentum: 0.9; LR: 0.00003; epochs:50 --> Loss 138
-
-# 8 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00001; epochs: 200; Grid: 14; weight_height_factor: 5 --> Loss 15
-# 8 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00001; epochs: 200; Grid: 7; weight_height_factor: 5 --> Loss 67.5878
-
-# 100 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00002; epochs: 50; Grid: 14; weight_height_factor: 5 --> Loss 326.7
-# 100 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00002; epochs: 50; Grid: 7; weight_height_factor: 5 --> Loss 215
-
-# 100 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00001; epochs: 50; Grid: 7; weight_height_factor: 5 --> Loss 170
-					# using schedule, Loss: 168
-
-# 100 examples; batch:8; FC: 1024; momentum: 0.9; LR: 0.00001; epochs: 50; Grid: 7; weight_height_factor: None;
-# using schedule, Loss: 69

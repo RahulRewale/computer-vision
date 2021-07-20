@@ -4,8 +4,7 @@ from collections import Counter
 from loss import YOLOLoss
 
 
-# TODO: implement in TF completely and should be vectorized
-
+# TODO: implement in TF completely
 
 def mAP(true_boxes, pred_boxes, iou_threshold=0.5, classes=20):
 	"""
@@ -112,4 +111,3 @@ def mAP(true_boxes, pred_boxes, iou_threshold=0.5, classes=20):
 
 	# return the Average Precision for the given iou_threshold
 	return sum(average_precisions) / len(average_precisions)
-

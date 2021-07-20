@@ -13,9 +13,8 @@ class DataLoader():
 	# 10 diningtable; 11 dog; 12 horse; 13 motorbike; 14 person; 15 pottedplant; 16 sheep
 	# 17 sofa; 18 train; 19 tvmonitor
 
-
 	def __init__(self, image_dir, label_dir):
-		""" Set the image and label directory
+		""" Set the image and label directories
 	
 		Parameters:
 		image_dir: the directory containing the input images
@@ -28,7 +27,7 @@ class DataLoader():
 
 	def load_train_data(self, csv_file, grid_size, classes, target_shape):
 		"""
-		Load images and corresponding labels files
+		Load image and corresponding label files
 
 		Parameters:
 		csv_file: files whose first column contains the image file names and the second column 
