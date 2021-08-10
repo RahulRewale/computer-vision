@@ -1,3 +1,14 @@
+"""
+	This file creates an alexnet model, trains it, and then evaluates it.
+	You can pass below parameters to this script:
+		learning rate
+		epochs 
+		no. of units in the dense layers
+		dropout rate
+		weight decay factor
+"""
+
+
 from  data_loader import DataLoader
 from alexnet import AlexNet
 import tensorflow.keras as K
@@ -7,11 +18,11 @@ import pandas as pd
 
 
 assert len(sys.argv) > 2, f"Pass learning rate and epochs at least; \
-							in addition you can pass no. of units in dense layers (default 512) \
-							and dropout rate (default 0.6)"
+							in addition you can pass no. of units in dense layers (default 512), \
+							dropout rate (default 0.6), and weight decay (default 0.008)"
 
-lr = float(sys.argv[1])				# 0.005
-epochs = int(sys.argv[2])			# 30
+lr = float(sys.argv[1])				# 0.008
+epochs = int(sys.argv[2])			# 20
 input_shape = (227, 227, 3)
 
 if len(sys.argv) > 3:
@@ -20,11 +31,14 @@ if len(sys.argv) > 3:
 	weight_decay = float(sys.argv[4])
 else:
 	dense_units = 512
-	drop = 0.5
-	weight_decay = 0.008
+	drop = 0.6
+	weight_decay = 0.01
 
-print("*"*10, f"LR-{lr}-epochs-{epochs}-units-{dense_units}-drop-{drop}", "*"*10)
 
+print("*"*10, f"LR-{lr}-epochs-{epochs}-units-{dense_units}-drop-{drop}-wd-{weight_decay}", "*"*10)
+
+
+# create directories for storing checkpoints and tensorflow graph
 logPath = f'LR-{lr}'
 checkPointPath = f'.\\checkpoints\\{logPath}\\'
 tbLogsPath = f'.\\tb-logs\\{logPath}'
@@ -32,11 +46,12 @@ os.makedirs(checkPointPath, exist_ok=True)
 os.makedirs(tbLogsPath, exist_ok=True)
 
 
-#load training and validation data
+#load all data
 ds_loader = DataLoader("..\\datasets\\augmented",
-							"..\\datasets\\augmented",
+							"..\\datasets\\imagenette2-320\\val",
 							"..\\datasets\\imagenette2-320\\val")
-train_ds, val_ds = ds_loader.load_train_val_data(input_shape[:2])
+train_ds = ds_loader.load_train_data(input_shape[:2])
+val_ds, test_ds = ds_loader.load_val_test_data(input_shape[:2])
 
 # create model
 alex_net = AlexNet(dense_units=dense_units, drop=drop, weight_decay=weight_decay)
@@ -51,8 +66,8 @@ alex_net.compile(optimizer=optimizer, loss=K.losses.CategoricalCrossentropy(), m
 tensorBoard = K.callbacks.TensorBoard(log_dir=tbLogsPath)
 # earlyStop = K.callbacks.EarlyStopping(monitor='val_loss', patience=6, restore_best_weights=True)
 # Reduce learning rate if validation loss doesn't improve much for two consecutive epochs
-reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_delta=0.05, 
-										patience=2, cooldown=1, min_lr=0.0001, verbose=1)
+reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.3, min_delta=0.05, 
+										patience=3, cooldown=1, min_lr=0.00001, verbose=1)
 ckpt = K.callbacks.ModelCheckpoint(
 			checkPointPath + 'checkpoint-epoch{epoch:02d}-loss{val_loss:.3f}',
 			save_weights_only=True, monitor='val_accuracy', 
@@ -66,7 +81,5 @@ df.to_csv(checkPointPath + 'history.csv')
 
 # alex_net.save(f"{lr}-{epochs}")
 
-
 # test the model
-test_ds = ds_loader.load_test_data(input_shape[:2])
 print(alex_net.evaluate(test_ds))

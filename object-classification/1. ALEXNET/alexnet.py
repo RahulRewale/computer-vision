@@ -4,11 +4,22 @@ import tensorflow.keras.layers as tfl
 
 
 class AlexNet(K.models.Model):
+	"""This class extends Keras Model class and creates an AlexNet model"""
 
 	def __init__(self, dense_units=512, drop=0.6, weight_decay=0.008, classes=10):
+		"""
+			Creates all the required layers using Keras
+			Parameters:
+			dense_units: no. of units in the dense layers
+			drop: dropout for the dense layers
+			weight_decay: weight decay for all conv. layers
+			classes: no. of categories/classes of objects
+		"""
 
 		super().__init__()
 
+		# AlexNet used image patches and their horizontal reflections for training. 
+		# Here, we are using either the input patch or its horizontal reflection randomly
 		self.flip = tfl.experimental.preprocessing.RandomFlip(mode='horizontal')
 
 		# random rotation
@@ -50,6 +61,7 @@ class AlexNet(K.models.Model):
 
 
 	def call(self, inputs, training=False):
+		"""Passes inputs through the alexnet layers"""
 
 		out = self.flip(inputs)
 		out = self.conv1(out)
