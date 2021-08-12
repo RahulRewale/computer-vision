@@ -87,4 +87,4 @@ if __name__ == "__main__":
 	# print(physical_devices[0], "memory growth set to True")
 	# tf.config.experimental.set_memory_growth(physical_devices[0], True)
 	# print("************************")
-	loadTrainingData('datasets\\imagenette2-320\\train', 64, (227, 227))
+	loadTrainingData('..\\datasets\\imagenette2-320\\train', 64, (227, 227))
