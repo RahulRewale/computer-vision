@@ -1,9 +1,10 @@
 import tensorflow as tf
 import tensorflow.keras as K
+import numpy as np
+
 
 class DataLoader():
 	"""Class to load training, validation, and testing data"""
-
 
 	def __init__(self, train_dir=None, val_dir=None, test_dir=None, validation_split=0.2, batch_size=32):
 		""" Sets the locations from where data should be loaded
@@ -57,7 +58,7 @@ class DataLoader():
 					directory=self.val_dir, label_mode='categorical',
 					image_size=input_shape, batch_size=self.batch_size, seed=11, 
 					validation_split=self.validation_split, subset='validation'
-				)
+				)	
 		else:
 			# load training data
 			train_ds = K.preprocessing.image_dataset_from_directory(

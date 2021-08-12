@@ -1,102 +1,119 @@
+import tensorflow as tf
 import tensorflow.keras as K
 import tensorflow.keras.layers as tfl
-import numpy as np
 
 
-class VGG16():
+class VGG16(K.models.Model):
+	"""This class extends Keras Model class and creates a VGG16 model"""
 
-	def __init__(self):
-		pass
 
-	def create(self, input_shape=(224, 224, 3), dense_units=1024, drop=0.5, classes=10):
+	def __init__(self, dense_units=512, drop=0.6, weight_decay=0.008, classes=10):
+		"""
+			Creates all the required layers using Keras
+			Parameters:
+			dense_units: no. of units in the dense layers
+			drop: dropout for the dense layers
+			weight_decay: weight decay for all conv. layers
+			classes: no. of categories/classes of objects
+		"""
 
-		x = K.Input(shape=input_shape)
+		super().__init__()
 
 		# preprocessing and augmentation
 		# out = tfl.experimental.preprocessing.CenterCrop(height=224, width=224) (x)
 		# out = tfl.experimental.preprocessing.Rescaling(1/255.0) (x)
 		# out = tfl.experimental.preprocessing.RandomFlip(mode='horizontal') (out)	
 
-		# model layers
-		out = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (x)
-		out = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.MaxPooling2D(pool_size=2, strides=2) (out)
+		# conv block 1 layers
+		self.block1_conv1 = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block1_conv2 = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block1_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
-		out = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.MaxPooling2D(pool_size=2, strides=2) (out)
+		# conv block 2 layers
+		self.block2_conv1 = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block2_conv2 = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block2_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
-		out = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)		
-		out = tfl.MaxPooling2D(pool_size=2, strides=2) (out)
+		# conv block 3 layers
+		self.block3_conv1 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block3_conv2 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block3_conv3 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block3_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)		
-		out = tfl.MaxPooling2D(pool_size=2, strides=2) (out)
+		# conv block 4 layers
+		self.block4_conv1 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block4_conv2 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block4_conv3 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block4_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)
-		out = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu') (out)		
-		out = tfl.MaxPooling2D(pool_size=2, strides=2) (out)
+		# conv block 5 layers
+		self.block5_conv1 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block5_conv2 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block5_conv3 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
+				activation='relu')
+		self.block5_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
-		out = tfl.Flatten() (out)
-		out = tfl.Dense(units=dense_units, activation='relu')(out)
-		out = tfl.Dropout(rate=drop) (out)
-		out = tfl.Dense(units=dense_units, activation='relu')(out)
-		out = tfl.Dropout(rate=drop) (out)
-		y = tfl.Dense(units=classes, activation='softmax')(out)
-
-		self.model = K.Model(inputs=x, outputs=y)
-		return self.model
-
-
-	def configure(self, optimizer=K.optimizers.SGD(learning_rate=0.005, momentum=0.9), 
-					loss= K.losses.CategoricalCrossentropy(),
-					metrics=['accuracy']):
-		self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+		# flatten and dense layers
+		self.flat = tfl.Flatten()
+		self.dense1 = tfl.Dense(units=dense_units, activation='relu')
+		self.drop1 = tfl.Dropout(rate=drop)
+		self.dense2 = tfl.Dense(units=dense_units, activation='relu')
+		self.drop2 = tfl.Dropout(rate=drop)
+		
+		# output layer layers
+		self.classifier = tfl.Dense(units=classes, activation='softmax')
 
 
-	def train(self, train_ds, val_ds, epochs=10, callbacks=None):
-		self.model.fit(x=train_ds, epochs=epochs, validation_data=val_ds, callbacks=callbacks)
+	def call(self, inputs, training=False):
+		"""Passes inputs through the alexnet layers"""
 
+		# conv block 1 layers
+		out = self.block1_conv1(inputs)
+		out = self.block1_conv2(out)
+		out = self.block1_pool(out)
 
-	def test(self, test_ds):
-		print(self.model.evaluate(test_ds))
+		# conv block 2 layers
+		out = self.block2_conv1(out)
+		out = self.block2_conv2(out)
+		out = self.block2_pool(out)
 
+		# conv block 3 layers
+		out = self.block3_conv1(out)
+		out = self.block3_conv2(out)
+		out = self.block3_conv3(out)
+		out = self.block3_pool(out)
 
-	def predict(self, x):
-		return self.model.predict(x)
+		# conv block 4 layers
+		out = self.block4_conv1(out)
+		out = self.block4_conv2(out)
+		out = self.block4_conv2(out)
+		out = self.block4_pool(out)
 
+		# conv block 5 layers
+		out = self.block5_conv1(out)
+		out = self.block5_conv2(out)
+		out = self.block5_conv3(out)
+		out = self.block5_pool(out)
 
-	def plot_model(self, path):
-		K.utils.plot_model(self.model, path, show_shapes=True)
+		# flatten and dense layers
+		out = self.flat(out)
+		out = self.dense1(out)
+		out = self.drop1(out)
+		out = self.dense2(out)
+		out = self.drop2(out)
 
+		# output
+		return self.classifier(out)
 
-	def save_model(self, path):
-		model.save(path)
-
-
-
-
-if __name__ == "__main__":
-	inp = np.random.random((5, 224, 224, 3))
-	vgg_model = VGG16()
-	vgg_model.create()
-	out = vgg_model.predict(inp)
-	print(out.shape)
-	vgg_model.plot_model('mymodel.png')
