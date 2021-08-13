@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 
 
+
 assert len(sys.argv) > 2, f"Pass learning rate and epochs at least; \
 							in addition you can pass no. of units in dense layers (default 512), \
 							dropout rate (default 0.6), and weight decay (default 0.008)"
@@ -31,7 +32,7 @@ if len(sys.argv) > 3:
 	weight_decay = float(sys.argv[4])
 else:
 	dense_units = 1024
-	drop = 0.5
+	drop = 0.4
 	weight_decay = 0.0005
 
 
@@ -51,6 +52,8 @@ ds_loader = DataLoader("..\\datasets\\imagenette2-320\\train",
 							"..\\datasets\\imagenette2-320\\train",
 							"..\\datasets\\imagenette2-320\\val")
 train_ds, val_ds = ds_loader.load_train_val_data(input_shape[:2])
+train_ds = train_ds.cache().shuffle(10).prefetch(2)
+val_ds = val_ds.prefetch(2)
 
 # create model
 vgg_model = VGG16(dense_units=dense_units, drop=drop, weight_decay=weight_decay)
@@ -67,7 +70,7 @@ tensorBoard = K.callbacks.TensorBoard(log_dir=tbLogsPath)
 # earlyStop = K.callbacks.EarlyStopping(monitor='val_loss', patience=6, restore_best_weights=True)
 # Reduce learning rate if validation loss doesn't improve much for two consecutive epochs
 reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.3, min_delta=0.05, 
-										patience=3, cooldown=1, min_lr=0.00001, verbose=1)
+										patience=2, cooldown=1, min_lr=0.00001, verbose=1)
 ckpt = K.callbacks.ModelCheckpoint(
 			checkPointPath + 'checkpoint-epoch{epoch:02d}-loss{val_loss:.3f}',
 			save_weights_only=True, monitor='val_accuracy', 

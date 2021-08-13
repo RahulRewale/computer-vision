@@ -20,9 +20,12 @@ class VGG16(K.models.Model):
 		super().__init__()
 
 		# preprocessing and augmentation
-		# out = tfl.experimental.preprocessing.CenterCrop(height=224, width=224) (x)
-		# out = tfl.experimental.preprocessing.Rescaling(1/255.0) (x)
-		# out = tfl.experimental.preprocessing.RandomFlip(mode='horizontal') (out)	
+		# self.centercrop = tfl.experimental.preprocessing.CenterCrop(height=224, width=224)
+		# self.scale = tfl.experimental.preprocessing.Rescaling(1/255.0)
+		self.flip = tfl.experimental.preprocessing.RandomFlip(mode='horizontal')
+		self.rotate = tfl.experimental.preprocessing.RandomRotation(factor=0.2)
+		# self.contrast = tfl.RandomContrast(factor=0.2)
+
 
 		# conv block 1 layers
 		self.block1_conv1 = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
@@ -76,8 +79,14 @@ class VGG16(K.models.Model):
 		self.classifier = tfl.Dense(units=classes, activation='softmax')
 
 
-	def call(self, inputs, training=False):
+	def call(self, inputs, training=False, augmentation=True):
 		"""Passes inputs through the alexnet layers"""
+
+		out = inputs
+
+		if augmentation:
+			out = self.flip(out)
+			out = self.rotate(out)
 
 		# conv block 1 layers
 		out = self.block1_conv1(inputs)
