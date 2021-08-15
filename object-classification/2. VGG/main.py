@@ -31,9 +31,9 @@ if len(sys.argv) > 3:
 	drop = float(sys.argv[3])
 	weight_decay = float(sys.argv[4])
 else:
-	dense_units = 1024
-	drop = 0.4
-	weight_decay = 0.0005
+	dense_units = 2048
+	drop = 0.3
+	weight_decay = 0.001
 
 
 print("*"*10, f"LR-{lr}-epochs-{epochs}-units-{dense_units}-drop-{drop}", "*"*10)
@@ -70,7 +70,7 @@ tensorBoard = K.callbacks.TensorBoard(log_dir=tbLogsPath)
 # earlyStop = K.callbacks.EarlyStopping(monitor='val_loss', patience=6, restore_best_weights=True)
 # Reduce learning rate if validation loss doesn't improve much for two consecutive epochs
 reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.3, min_delta=0.05, 
-										patience=2, cooldown=1, min_lr=0.00001, verbose=1)
+										patience=2, cooldown=1, verbose=1) #min_lr=0.00001
 ckpt = K.callbacks.ModelCheckpoint(
 			checkPointPath + 'checkpoint-epoch{epoch:02d}-loss{val_loss:.3f}',
 			save_weights_only=True, monitor='val_accuracy', 
