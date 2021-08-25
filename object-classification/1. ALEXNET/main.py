@@ -30,9 +30,9 @@ if len(sys.argv) > 3:
 	drop = float(sys.argv[3])
 	weight_decay = float(sys.argv[4])
 else:
-	dense_units = 512
-	drop = 0.6
-	weight_decay = 0.01
+	dense_units = 64
+	drop = 0.5
+	weight_decay = 0.015
 
 
 print("*"*10, f"LR-{lr}-epochs-{epochs}-units-{dense_units}-drop-{drop}-wd-{weight_decay}", "*"*10)
@@ -66,7 +66,7 @@ alex_net.compile(optimizer=optimizer, loss=K.losses.CategoricalCrossentropy(), m
 tensorBoard = K.callbacks.TensorBoard(log_dir=tbLogsPath)
 # earlyStop = K.callbacks.EarlyStopping(monitor='val_loss', patience=6, restore_best_weights=True)
 # Reduce learning rate if validation loss doesn't improve much for two consecutive epochs
-reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.3, min_delta=0.05, 
+reduceLR = K.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, min_delta=0.05, 
 										patience=3, cooldown=1, min_lr=0.00001, verbose=1)
 ckpt = K.callbacks.ModelCheckpoint(
 			checkPointPath + 'checkpoint-epoch{epoch:02d}-loss{val_loss:.3f}',
