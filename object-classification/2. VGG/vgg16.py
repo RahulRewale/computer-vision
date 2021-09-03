@@ -23,56 +23,56 @@ class VGG16(K.models.Model):
 		# self.centercrop = tfl.experimental.preprocessing.CenterCrop(height=224, width=224)
 		# self.scale = tfl.experimental.preprocessing.Rescaling(1/255.0)
 		self.flip = tfl.experimental.preprocessing.RandomFlip(mode='horizontal')
-		self.rotate = tfl.experimental.preprocessing.RandomRotation(factor=0.2)
+		self.rotate = tfl.experimental.preprocessing.RandomRotation(factor=0.1)
 		# self.contrast = tfl.RandomContrast(factor=0.2)
 
 
 		# conv block 1 layers
 		self.block1_conv1 = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block1_conv2 = tfl.Conv2D(filters=64, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block1_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
 		# conv block 2 layers
 		self.block2_conv1 = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block2_conv2 = tfl.Conv2D(filters=128, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block2_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
 		# conv block 3 layers
 		self.block3_conv1 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block3_conv2 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block3_conv3 = tfl.Conv2D(filters=256, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block3_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
 		# conv block 4 layers
 		self.block4_conv1 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block4_conv2 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block4_conv3 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block4_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
 		# conv block 5 layers
 		self.block5_conv1 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block5_conv2 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block5_conv3 = tfl.Conv2D(filters=512, kernel_size=3, strides=1, padding='same', 
-				activation='relu')
+				activation='relu', kernel_initializer='he_normal')
 		self.block5_pool = tfl.MaxPooling2D(pool_size=2, strides=2)
 
 		# flatten and dense layers
 		self.flat = tfl.Flatten()
-		self.dense1 = tfl.Dense(units=dense_units, activation='relu')
+		self.dense1 = tfl.Dense(units=dense_units, activation='relu', kernel_initializer='he_normal')
 		self.drop1 = tfl.Dropout(rate=drop)
-		self.dense2 = tfl.Dense(units=dense_units, activation='relu')
+		self.dense2 = tfl.Dense(units=dense_units, activation='relu', kernel_initializer='he_normal')
 		self.drop2 = tfl.Dropout(rate=drop)
 		
 		# output layer layers
@@ -89,7 +89,7 @@ class VGG16(K.models.Model):
 			out = self.rotate(out)
 
 		# conv block 1 layers
-		out = self.block1_conv1(inputs)
+		out = self.block1_conv1(out)
 		out = self.block1_conv2(out)
 		out = self.block1_pool(out)
 
