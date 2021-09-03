@@ -5,27 +5,43 @@ import os
 
 # https://stackoverflow.com/questions/64326029/load-tensorflow-images-and-create-patches
 
-def extractPatches(batchX, batchY):
-	batchX = batchX/255.0
-	patchSize = 227
+def custom_extract_patches(batch_x, batch_y):
+	""" 
+		Creates patches for a batch of images
+	
+		Parameters:
+		batch_x: batch of images
+		batch_y: batch of labels for the above images
+	"""
+
+	patch_size = 227
 	stride = 9			# chosen as per memory availability on my system
-	patches = tf.image.extract_patches(batchX, sizes=[1, patchSize, patchSize, 1], strides=[1, stride, stride, 1], rates=[1,1,1,1], padding='VALID')
-	rowPatches = ((256 - patchSize)//stride) + 1
-	noOfPatches = rowPatches*rowPatches	# no. of patches from a single image
-	patches = tf.reshape(patches,  (-1,) + (patchSize, patchSize, 3))
-	labels = tf.repeat(batchY, repeats=noOfPatches, axis=0)
+	patches = tf.image.extract_patches(batch_x, sizes=[1, patch_size, patch_size, 1], strides=[1, stride, stride, 1], rates=[1,1,1,1], padding='VALID')
+	rowPatches = ((256 - patch_size)//stride) + 1
+	no_patches = rowPatches*rowPatches	# no. of patches from a single image
+	patches = tf.reshape(patches,  (-1,) + (patch_size, patch_size, 3))
+	labels = tf.repeat(batch_y, repeats=no_patches, axis=0)
 	labels = tf.reshape(labels, (-1,) + (10,))
 
 	return patches, labels
 
 
-def loadTrainingData(path, batchSize=32, imageSize=(256, 256)):
+def load_training_data(path, batch_size=32, image_size=(256, 256)):
+	"""
+		Loads images from given path, generates patches, and stores them
 
+		Parameters:
+		path: directory containing the images for which patches have to be created
+		batch_size: batch size for loading images
+		image_size: the size to which all images will be resized during loading
+	"""
+
+	# load images from given directory
 	trainDS = tf.keras.preprocessing.image_dataset_from_directory(
 				directory = path,
 				label_mode = 'categorical',	
-				batch_size = 32,			# default; fails for larger value because of memory constraints
-				image_size = (256, 256),	# default
+				batch_size = batch_size,	# using 32; fails for larger value because of memory constraints
+				image_size = image_size,	# default
 				# smart_resize = True, # available from v2.5
 				)
 
@@ -36,15 +52,16 @@ def loadTrainingData(path, batchSize=32, imageSize=(256, 256)):
 	# print(trainDS.element_spec)
 
 	# generate patches
-	trainDS = trainDS.map(extractPatches)
+	trainDS = trainDS.map(custom_extract_patches)
 	# unbatch, shuffle, and batch to make sure that patches from the same image are not together
 	trainDS = trainDS.unbatch().shuffle(10000).batch(batchSize)
 
-
+	# class-specific folders to store these patches
+	# the folder names are same as that of the folders in "path" directory
 	folderNames = ['n01440764', 'n02102040', 'n02979186', 'n03000684', 'n03028079', 'n03394916',
 					'n03417042', 'n03425413', 'n03445777', 'n03888257']
 
-	trainDS.class_names
+	#create folders
 	for i in range(10):
 		os.makedirs(f'..\\datasets\\augmented\\{folderNames[i]}')
 
@@ -72,19 +89,14 @@ def loadTrainingData(path, batchSize=32, imageSize=(256, 256)):
 	# 			'French Horn', 'Garbage Truck', 'Gas Pump', 'Golf Ball', 'Parachute']
 	# for i in range(16):
 	# 	plt.subplot(4, 4, i+1)
-	# 	plt.imshow(batchX[i])
+	# 	plt.imshow(batchX[i]/255.0)
 	# 	plt.axis('off')
 	# 	plt.title(validLabels[np.argmax(batchY[i])])
 	# plt.show()
 
-	# Returning small amount of data; remove take() in future
 	return trainDS
 
 
 if __name__ == "__main__":
-	# physical_devices = tf.config.list_physical_devices('GPU')
-	# print("************************")
-	# print(physical_devices[0], "memory growth set to True")
 	# tf.config.experimental.set_memory_growth(physical_devices[0], True)
-	# print("************************")
-	loadTrainingData('..\\datasets\\imagenette2-320\\train', 64, (227, 227))
+	load_training_data('..\\datasets\\imagenette2-320\\train', 32, (227, 227))

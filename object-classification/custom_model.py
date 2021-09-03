@@ -7,7 +7,7 @@ import numpy as np
 
 
 class CustomModel():
-	""" This class creates a custom model from one of the pre-trained tensorflow models"""
+	""" This class creates a custom model from one of the pre-trained tensorflow models """
 
 	# a dictionary of supported models
 	# key is the model name that we are using, and value is the name used for this model when it becomes part of a larger model
@@ -22,14 +22,14 @@ class CustomModel():
 	def loadBaseModel(self, baseModelName='vgg16', shape=(224, 224, 3)):
 		"""Loads a pre-trained model 
 			Parameters:
-			baseModelName: 	pass the name of the model to load; 
-						the model name should be one of the supported models
-			shape: pass the input shape for the model
+			baseModelName: the name of the model to load; 
+					the model name should be one of the supported models
+			shape: pass the data input shape for the model
 		"""
 
 		# check if the model is supported
 		if baseModelName not in CustomModel.validModels:
-			print(f"This model is not supported.\nSupported models are {CustomModel.validModels.keys()}\nExiting...")
+			print(f"This model is not supported.\nUse one of {CustomModel.validModels.keys()}\nExiting...")
 			sys.exit(1)
 
 		self.baseModelName = baseModelName
@@ -56,9 +56,9 @@ class CustomModel():
 		on top of the loaded pre-trained model
 		
 		parameters:
-			layersToAdd: a list of layers to add on top of the pre-trained base model
+			layersToAdd: a list of layers to add at the end of the pre-trained base model
 			inputShape: Keras.Input() will be created with this shape
-			preprocessInput: Uses base model specific preprocessing method; pass False if not required
+			preprocessInput: Uses base model specific preprocessing method; pass False if data is already preprocessed
 			horizFlip: If True, flips input image horizontaly with 50% probability
 		"""
 
@@ -122,8 +122,8 @@ class CustomModel():
 		print(f'Loading training data from {trainLoc}')
 		self.trainDS = K.preprocessing.image_dataset_from_directory(
 				directory = trainLoc,
-				label_mode = 'categorical', 
-				batch_size = batchSize, 
+				label_mode = 'categorical',
+				batch_size = batchSize,
 				image_size = imageSize
 				)
 
@@ -198,8 +198,7 @@ class CustomModel():
 		# print(testResults)
 
 
-		# plot some samples from the one batch of the test data
-		count = 9
+		# plot some samples from one batch of the test data
 		for x, y in self.testDS.take(1):	
 			pass
 		# x contains a batch of images
@@ -207,7 +206,7 @@ class CustomModel():
 
 		pred = self.model.predict(x)	# predict on the batch
 
-		for i, img in enumerate(x[:count]):	# take out the first 'count' images
+		for i, img in enumerate(x[:9]):	# take out the first few images
 			plt.subplot(3, 3, i+1)
 			plt.imshow(img/255.0)
 			plt.axis('off')

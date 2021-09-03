@@ -7,7 +7,7 @@ class DataLoader():
 	"""Class to load training, validation, and testing data"""
 
 	def __init__(self, train_dir=None, val_dir=None, test_dir=None, validation_split=0.3, batch_size=128):
-		""" Sets the locations from where data should be loaded
+		""" Sets the directories from where data should be loaded
 	
 		Parameters:
 		train_dir: directory containing the training data
@@ -30,7 +30,7 @@ class DataLoader():
 
 
 	def load_val_test_data(self, input_shape=(227, 227), val_dir=None, test_dir=None):
-		"""Loads training and validation data
+		"""Loads testing and validation data
 
 		Parameter:
 		input_shape: target image size that we want for images
@@ -43,49 +43,28 @@ class DataLoader():
 			self.test_dir = test_dir
 		if val_dir: 
 			self.val_dir = val_dir
-
 		# if both paths are same, we need to split data into two parts
 
+		# load data
 		all_ds = K.preprocessing.image_dataset_from_directory(
 					directory=self.test_dir, label_mode='categorical',
 					image_size=input_shape, batch_size=self.batch_size
 				)
 
 		total_size = tf.data.experimental.cardinality(all_ds) 
-
 		print("all_ds size:", total_size)
 
 		if self.test_dir == self.val_dir:
-			# load training data
-
+			# split data into validation and testing set
 			test_ds = all_ds.take(total_size.numpy() * self.validation_split)
 			val_ds = all_ds.skip(total_size.numpy() * self.validation_split)
-
-			# train_ds = K.preprocessing.image_dataset_from_directory(
-			# 		directory=self.train_dir, label_mode='categorical',
-			# 		image_size=input_shape, batch_size=self.batch_size, seed=11, 
-			# 		validation_split=self.validation_split, subset='training'
-			# 	)
-
-			# # load validation data
-			# val_ds = K.preprocessing.image_dataset_from_directory(
-			# 		directory=self.val_dir, label_mode='categorical',
-			# 		image_size=input_shape, batch_size=self.batch_size, seed=11, 
-			# 		validation_split=self.validation_split, subset='validation'
-			# 	)
 		else:
-			# load training data
 			test_ds = all_ds
+			# load val_ds from given directory
 			val_ds = K.preprocessing.image_dataset_from_directory(
 					directory=self.val_dir, label_mode='categorical',
 					image_size=input_shape, batch_size=self.batch_size
 				)
-
-			# load validation data
-			# val_ds = K.preprocessing.image_dataset_from_directory(
-			# 		directory=self.val_dir, label_mode='categorical',
-			# 		image_size=input_shape, batch_size=self.batch_size
-			# 	)
 
 		print("val_ds size:", tf.data.experimental.cardinality(val_ds))
 		print("test_ds size:", tf.data.experimental.cardinality(test_ds))
@@ -98,7 +77,7 @@ class DataLoader():
 
 
 	def load_train_data(self, input_shape=(227, 227), train_dir=None):
-		"""Loads test data
+		"""Loads training data
 
 		Parameter:
 		input_shape: target image size that we want for images
@@ -108,7 +87,7 @@ class DataLoader():
 		if train_dir:
 			self.train_dir = train_dir
 
-		# load test data
+		# load data
 		train_ds = K.preprocessing.image_dataset_from_directory(
 				directory=self.train_dir, label_mode='categorical',
 				image_size=input_shape, batch_size=self.batch_size

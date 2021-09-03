@@ -9,6 +9,7 @@ class AlexNet(K.models.Model):
 	def __init__(self, dense_units=512, drop=0.6, weight_decay=0.008, classes=10):
 		"""
 			Creates all the required layers using Keras
+			
 			Parameters:
 			dense_units: no. of units in the dense layers
 			drop: dropout for the dense layers
@@ -61,7 +62,7 @@ class AlexNet(K.models.Model):
 
 
 	def call(self, inputs, training=False):
-		"""Passes inputs through the alexnet layers"""
+		"""Processes inputs through the alexnet layers and returns output"""
 
 		out = self.flip(inputs)
 		out = self.conv1(out)
