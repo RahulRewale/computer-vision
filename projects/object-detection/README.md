@@ -24,10 +24,10 @@ For labeling images, I used [LabelImg](https://github.com/tzutalin/labelImg)
 
 
 Trained the model for 10k training steps. Anchor boxes were selected manually by trying various values. Since the objects are of greatly varying shapes, I ended up using large number of anchor boxes. A better way to select anchor boxes is to use K-means algorithm, which I am planning to work on. <br/>
-The anchor boxes, learning rate, confidence score and IOU thresholds, other config details can be found in pipeline.config file.
+The anchor boxes, learning rate, confidence score and IOU thresholds, and other config details can be found in pipeline.config file.
 
 
-Achieved an average precision of 0.551 @IoU=0.50:0.95 and 0.810 @IoU=0.50
+Achieved an average precision of 0.551 @IoU=0.50:0.95 and 0.810 @IoU=0.50 <br/>
 Achieved an average recall of 0.609 @IoU=0.50:0.95
 
 
