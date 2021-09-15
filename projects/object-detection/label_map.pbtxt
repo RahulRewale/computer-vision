@@ -1,0 +1,40 @@
+item {
+  name: "Person"
+  id: 1
+}
+item {
+  name: "Lion"
+  id: 2
+}
+item {
+  name: "Cat"
+  id: 3
+}
+item {
+  name: "Guitar"
+  id: 4
+}
+item {
+  name: "Glasses"
+  id: 5
+}
+item {
+  name: "Sword"
+  id: 6
+}
+item {
+  name: "Shoe"
+  id: 7
+}
+item {
+  name: "Reindeer"
+  id: 8
+}
+item {
+  name: "Pen"
+  id: 9
+}
+item {
+  name: "Cricket Bat"
+  id: 10
+}
