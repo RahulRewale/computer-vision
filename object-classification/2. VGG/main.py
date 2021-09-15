@@ -32,8 +32,8 @@ if len(sys.argv) > 3:
 	weight_decay = float(sys.argv[4])
 else:
 	dense_units = 2048
-	drop = 0.0001
-	weight_decay = 0.001
+	drop = 0.2
+	weight_decay = 0.0005
 
 
 print("*"*10, f"LR-{lr}-epochs-{epochs}-units-{dense_units}-drop-{drop}", "*"*10)
