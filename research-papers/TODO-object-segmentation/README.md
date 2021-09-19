@@ -1,7 +1,6 @@
 # Object Segmentation Research Papers
 
-# TODO - papers to study
-
+#### TODO - papers to study
 https://neptune.ai/blog/image-segmentation-in-2020
 1) U-Net
 2) Mask R-CNN
