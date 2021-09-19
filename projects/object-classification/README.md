@@ -1,4 +1,3 @@
-### *UPDATING THIS FOLDER* ###
 # Object Classification Using AlexNet
 
 This directory contains AlexNet that I implemented from scratch for classifying 10 different classes of objects. I made few modifications to the original AlexNet model to prevent overfitting on the dataset that I am using.
