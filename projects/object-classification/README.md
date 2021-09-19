@@ -36,3 +36,7 @@ For validation and testing, 5 crops were taken from each image. 4 crops from fou
 Training Metrics: Loss 0.26260703802108765; Accuracy 0.8897388577461243 <br/>
 Validation Metrics: Loss 0.5777757167816162; Accuracy 0.8654513955116272 <br/>
 Testing Metrics: Loss 0.6200770139694214; Accuracy 0.8489000797271729 <br/>
+
+### Note:
+Using more neurons in the fully connected layers and/or smaller dropout takes the training accuracy to >95%, but validation accuracy gets stuck around 88%. Using 64 neurons with dropout of 0.5 significantly reduced overfitting. 
+I am currently trying to improve the validation/testing accuracy without overfitting to training dataset.
