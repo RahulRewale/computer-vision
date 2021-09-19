@@ -1,6 +1,6 @@
-# Using Pre-trained Models for Classification using Transfer Learning
+# Using Pre-trained Models for Classification (Transfer Learning)
 
-Models trained using transfer-learning: (All the pre-trained models are used from tensorflow)
+Models trained using transfer-learning (All the pre-trained models are used from tensorflow):
 1) VGG16
 2) Inception V3
 3) RESNET 50
