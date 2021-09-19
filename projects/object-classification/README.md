@@ -33,7 +33,7 @@ Training dataset contains 9469 images. For training, 16 crops of (227, 227) were
 For validation and testing, 5 crops were taken from each image. 4 crops from four corners and the 5th one from the center of the image. These 5 crops and their mirror reflections were used for validation and testing. Accuracy was calculated by taking average of the outputs of these 10 crops per image.
 
 
-### Results (epoch 20 of 25): <br/>
+### Results (using checkpoint 20 of 25): <br/>
 Training Metrics: Loss 0.26260703802108765; Accuracy 0.8897388577461243 <br/>
 Validation Metrics: Loss 0.5777757167816162; Accuracy 0.8654513955116272 <br/>
 Testing Metrics: Loss 0.6200770139694214; Accuracy 0.8489000797271729 <br/>
