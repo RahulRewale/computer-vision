@@ -1,4 +1,6 @@
-# Other Papers to Study
+# Object Segmentation Research Papers
+
+# TODO - papers to study
 
 https://neptune.ai/blog/image-segmentation-in-2020
 1) U-Net
