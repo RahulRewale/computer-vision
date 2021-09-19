@@ -3,7 +3,7 @@
 
 This directory contains AlexNet that I implemented from scratch for classifying 10 different classes of objects. I made few modifications to the original AlexNet model to prevent overfitting on the dataset that I am using.
 
-### [Google Colab Notebook](): 
+### [Google Colab Notebook](https://colab.research.google.com/drive/1WTPqnMhtksuRtFHIKObAgOBVREBihGs5?usp=sharing): 
 Google Colab link that contains the code as well as the outputs from the trained model.
 
 ### [Imagenette Dataset](https://github.com/fastai/imagenette): 
