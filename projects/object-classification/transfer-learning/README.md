@@ -25,5 +25,5 @@ A folder containing the ImageNette dataset
 A folder containing few images to visualize outputs
 
 
-#### [Dataset](https://github.com/fastai/imagenette):
+#### [Imagenette Dataset](https://github.com/fastai/imagenette):
 Since "ImageNet" dataset is not publically available, I have used "Imagenette" dataset
