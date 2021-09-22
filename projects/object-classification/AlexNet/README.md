@@ -22,8 +22,9 @@ Since Imagenet dataset is not publically available, I used Imagenette dataset, w
 
 
 ### Model
-The model has 64 neurons in fully connected layers (as opposed to 4096 in original Alexnet) and dropout of 0.5. All layers, except the output layer, use ReLU activation. The output layer has 10 neurons with Softmax activation.
-Trained the model for 25 epochs using Adam optimizer with initial learning rate of 0.0001. The learning rate was reduced over time as and when validation loss stagnated. The model uses weight decay of 0.00001.
+The model has 64 neurons in its fully connected layers (as opposed to 4096 in original Alexnet) and dropout of 0.5. All layers, except the output layer, use ReLU activation. The output layer has 10 neurons with Softmax activation. Even though the original Alexnet didn't have Batch Normalization layers, I have added those and that did increase the model accuracy. <br/>
+Trained the model for 25 epochs using Adam optimizer with initial learning rate of 0.0001. The learning rate was reduced over time as and when the validation loss stagnated. Since I am using tf.GradientTape for training, I had to implement a function to reduce the learning rate. <br/>
+The model uses weight decay of 0.00001.
 
 
 ### Training
@@ -42,4 +43,4 @@ Testing Metrics: Loss 0.6200770139694214; Accuracy 0.8489000797271729 <br/>
 
 ### Note
 Using more neurons in the fully connected layers and/or smaller dropout takes the training accuracy to >95%, but validation accuracy gets stuck around 88%. Using 64 neurons with dropout of 0.5 significantly reduced overfitting. 
-I am currently trying to improve the validation/testing accuracy without overfitting to training dataset.
+I am currently trying to improve the validation/testing accuracy without overfitting to the training dataset.
