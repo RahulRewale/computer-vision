@@ -5,4 +5,4 @@ Contains code for detecting 10 different classes of objects using Tensorflow Obj
 <br/>
 
 #### yolov1: <br/>
-Contains yolov1 implementation from scratch. The implementation is *almost* complete. It seems that there may be some bug(s) because of which output is not that accurate.
+Contains yolov1 implementation from scratch. The implementation is *almost* complete. It seems that there may be some bug(s) because of which training cost stops decreasing after some time.
