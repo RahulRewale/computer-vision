@@ -1,0 +1,166 @@
+Stride = 9
+dense_units = 64
+drop = 0.5
+weight_decay = 0.0005
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
+
+Epoch 21/25
+Training Metrics: Loss 0.34361451864242554; Accuracy 0.8913329243659973
+Validation Metrics: Loss 0.6436941623687744; Accuracy 0.8243779540061951
+
+Epoch 25/25
+Training Metrics: Loss 0.3080824911594391; Accuracy 0.9020587205886841
+Validation Metrics: Loss 0.6747678518295288; Accuracy 0.8135592937469482
+Testing Metrics: Loss 0.6769053339958191; Accuracy 0.8125
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 64
+drop = 0.5
+weight_decay = 0.001
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
+
+Epoch 20/25
+Training Metrics: Loss 0.4169953465461731; Accuracy 0.8659276366233826
+Validation Metrics: Loss 0.7098778486251831; Accuracy 0.8099530935287476
+
+Epoch 25/25
+Training Metrics: Loss 0.3624676465988159; Accuracy 0.8846631050109863
+Validation Metrics: Loss 0.714428722858429; Accuracy 0.8052650690078735
+Testing Metrics: Loss 0.6591551899909973; Accuracy 0.8220486044883728
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 128
+drop = 0.5
+weight_decay = 0.001
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
+
+Epoch 18/25
+Training Metrics: Loss 0.20643453299999237; Accuracy 0.9357409477233887
+Validation Metrics: Loss 0.6732680201530457; Accuracy 0.8214929699897766
+
+Epoch 25/25
+Training Metrics: Loss 0.16061215102672577; Accuracy 0.9495062828063965
+Validation Metrics: Loss 0.6922425031661987; Accuracy 0.8106743693351746
+Testing Metrics: Loss 0.6702861785888672; Accuracy 0.8159722089767456
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 128
+drop = 0.5
+weight_decay = 0.005
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
+
+Epoch 23/25
+Training Metrics: Loss 0.15686579048633575; Accuracy 0.9514105319976807
+Validation Metrics: Loss 0.6930515766143799; Accuracy 0.8160836696624756
+
+Epoch 25/25
+Training Metrics: Loss 0.15031224489212036; Accuracy 0.9530474543571472
+Validation Metrics: Loss 0.6939470767974854; Accuracy 0.8110349774360657
+Testing Metrics: Loss 0.7836784720420837; Accuracy 0.8046875
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 128
+drop = 0.5
+weight_decay = 0.005
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.5
+
+Epoch 20/25
+Training Metrics: Loss 0.21633709967136383; Accuracy 0.9335001111030579
+Validation Metrics: Loss 0.6581739783287048; Accuracy 0.8178867697715759
+
+Epoch 25/25
+Training Metrics: Loss 0.18634727597236633; Accuracy 0.9422094225883484
+Validation Metrics: Loss 0.6892993450164795; Accuracy 0.8135592937469482
+Testing Metrics: Loss 0.6170796155929565; Accuracy 0.8081597089767456
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 128
+drop = 0.5
+weight_decay = 0.01
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.5
+
+Epoch 20/25
+Training Metrics: Loss 0.19352367520332336; Accuracy 0.9398332834243774
+Validation Metrics: Loss 0.6912940144538879; Accuracy 0.8196898698806763
+
+Epoch 25/25
+Training Metrics: Loss 0.16814905405044556; Accuracy 0.9468891620635986
+Validation Metrics: Loss 0.7153971195220947; Accuracy 0.8121168613433838
+Testing Metrics: Loss 0.7083775997161865; Accuracy 0.8185763955116272
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 64
+drop = 0.4
+weight_decay = 0.01
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.5
+
+Epoch 20/25:
+Training Metrics: Loss 0.28687673807144165; Accuracy 0.9089165925979614
+Validation Metrics: Loss 0.6898255944252014; Accuracy 0.8049044609069824
+
+Epoch 25/25:
+Training Metrics: Loss 0.24903573095798492; Accuracy 0.9205862283706665
+Validation Metrics: Loss 0.7234982848167419; Accuracy 0.8005769848823547
+Testing Metrics: Loss 0.7159671783447266; Accuracy 0.8064236044883728
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 64
+drop = 0.4
+weight_decay = 0.01
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
+
+Epoch 20/25
+Training Metrics: Loss 0.210235595703125; Accuracy 0.9332196116447449
+Validation Metrics: Loss 0.6905674934387207; Accuracy 0.8146411776542664
+
+Epoch 25/25
+???? Program Stopped due to network issue
+
+
+*****************************************************************************
+Stride = 9
+dense_units = 64
+drop = 0.4
+weight_decay = 0.005
+lr = 3e-4
+start_epoch = 0
+epochs = 25
+lr factor = 0.7
