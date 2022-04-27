@@ -1,3 +1,6 @@
 # Computer Vision
 
-This repo contains SOTA research papers, their summaries, and few projects.
+This repo contains: 
+  1) SOTA research papers and their summaries 
+  2) Few personal projects
+  3) Udacity Computer Vision nano-degree projects
