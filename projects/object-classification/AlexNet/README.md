@@ -22,9 +22,9 @@ Since Imagenet dataset is not publically available, I used Imagenette dataset, w
 
 
 ### Model
-The model has 64 neurons in its fully connected layers (as opposed to 4096 in original Alexnet) and dropout of 0.5. All layers, except the output layer, use ReLU activation. The output layer has 10 neurons with Softmax activation. Even though the original Alexnet didn't have Batch Normalization layers, I have added those and that did increase the model accuracy. <br/>
+The model has ~~64~~ 32 neurons in its fully connected layers (as opposed to 4096 in original Alexnet) and dropout of ~~0.5~~ 0.4. All layers, except the output layer, use ReLU activation. The output layer has 10 neurons with Softmax activation. Even though the original Alexnet didn't have Batch Normalization layers, I have added those and that did increase the model accuracy. <br/>
 Trained the model for 25 epochs using Adam optimizer with initial learning rate of 0.0001. The learning rate was reduced over time as and when the validation loss stagnated. Since I am using tf.GradientTape for training, I had to implement a function to reduce the learning rate. <br/>
-The model uses weight decay of 0.00001.
+The model uses weight decay of ~~0.00001~~ 0.005.
 
 
 ### Training
@@ -36,9 +36,12 @@ For validation and testing, 5 crops were taken from each image. 4 crops from fou
 
 
 ### Results (using checkpoint 20 of 25)
-Training Metrics: Loss 0.26260703802108765; Accuracy 0.8897388577461243 <br/>
+~~Training Metrics: Loss 0.26260703802108765; Accuracy 0.8897388577461243<br/>
 Validation Metrics: Loss 0.5777757167816162; Accuracy 0.8654513955116272 <br/>
-Testing Metrics: Loss 0.6200770139694214; Accuracy 0.8489000797271729 <br/>
+Testing Metrics: Loss 0.6200770139694214; Accuracy 0.8489000797271729 <br/>~~
+Training Metrics: Loss 0.2864932417869568; Accuracy 0.8940225839614868 <br/>
+Validation Metrics: Loss 0.5890660881996155; Accuracy 0.866209864616394 <br/>
+Testing Metrics: Loss 0.5925605893135071; Accuracy 0.8602430820465088 <br/>
 
 
 ### Note
