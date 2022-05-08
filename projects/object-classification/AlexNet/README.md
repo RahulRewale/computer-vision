@@ -3,7 +3,7 @@
 This directory contains AlexNet that I implemented from scratch for classifying 10 different classes of objects. I made a few modifications to the original AlexNet model to prevent overfitting on the dataset that I am using.
 
 
-### [Google Colab Notebook](https://colab.research.google.com/drive/1WTPqnMhtksuRtFHIKObAgOBVREBihGs5?usp=sharing)
+### [Google Colab Notebook](https://colab.research.google.com/drive/17VQXrfAXEnWnmduW7ZOqZugQeSubogQU?usp=sharing)
 Google Colab link that contains the code as well as the outputs from the trained model.
 
 
@@ -45,5 +45,5 @@ Testing Metrics: Loss 0.5925605893135071; Accuracy 0.8602430820465088 <br/>
 
 
 ### Note
-Using more neurons in the fully connected layers and/or smaller dropout takes the training accuracy to >95%, but validation accuracy gets stuck around 88%. Using 64 neurons with dropout of 0.5 significantly reduced overfitting. 
+Using more neurons in the fully connected layers and/or smaller dropout takes the training accuracy to >95%, but validation accuracy gets stuck around 88%. Using ~~64~~ 32 neurons with dropout of ~~0.5~~ 0.4 significantly reduced overfitting. 
 I am currently trying to improve the validation/testing accuracy without overfitting to the training dataset.
